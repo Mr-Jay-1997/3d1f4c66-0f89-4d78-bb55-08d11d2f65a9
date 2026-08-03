@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LIS.Api/LIS.Api.csproj" />
+    <Project Path="src/LIS.Application/LIS.Application.csproj" />
+    <Project Path="src/LIS.Domain/LIS.Domain.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LIS.Application.Tests/LIS.Application.Tests.csproj" />
+  </Folder>
+</Solution>
