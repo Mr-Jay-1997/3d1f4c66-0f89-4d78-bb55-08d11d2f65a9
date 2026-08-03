@@ -24,12 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\LIS.Application\LIS.Application.csproj" />
-    <ProjectReference Include="..\..\src\LIS.Domain\LIS.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TestData\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="TestData\**\*.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>
