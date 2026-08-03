@@ -24,55 +24,48 @@ public sealed class LongestIncreasingSubsequenceService : ILongestIncreasingSubs
 
     private static IReadOnlyList<int> FindLongestIncreasingSubsequence(int[] numbers)
     {
-        int n = numbers.Length;
-
-        if (n == 0)
+        if (numbers.Length == 0)
         {
             return Array.Empty<int>();
         }
 
-        int[] dp = new int[n];
-        int[] previous = new int[n];
+        int bestStart = 0;
+        int bestLength = 1;
 
-        Array.Fill(dp, 1);
-        Array.Fill(previous, -1);
+        int currentStart = 0;
+        int currentLength = 1;
 
-        int bestIndex = 0;
-
-
-        for (int i = 0; i < n; i++)
+        for (int i = 1; i < numbers.Length; i++)
         {
-            for (int j = 0; j < i; j++)
+            if (numbers[i] > numbers[i - 1])
             {
-                if (numbers[j] < numbers[i] && dp[j] + 1 > dp[i])
+                currentLength++;
+            }
+            else
+            {
+                if (currentLength > bestLength)
                 {
-                    dp[i] = dp[j] + 1;
-                    previous[i] = j;
+                    bestLength = currentLength;
+                    bestStart = currentStart;
                 }
-            }
 
-            // keep first occurrence when same length exists
-            if (dp[i] > dp[bestIndex])
-            {
-                bestIndex = i;
+                currentStart = i;
+                currentLength = 1;
             }
         }
-        return BuildSequence(numbers, previous, bestIndex);
-    }
 
-    private static IReadOnlyList<int> BuildSequence(int[] numbers, int[] previous, int lastIndex)
-    {
-        List<int> sequence = new();
-
-        while (lastIndex != -1)
+        // Check the last sequence
+        if (currentLength > bestLength)
         {
-            sequence.Add(numbers[lastIndex]);
-            lastIndex = previous[lastIndex];
+            bestLength = currentLength;
+            bestStart = currentStart;
         }
 
-        sequence.Reverse();
+        int[] result = new int[bestLength];
 
-        return sequence;
+        Array.Copy(numbers, bestStart, result, 0, bestLength);
+
+        return result;
     }
 
 }
