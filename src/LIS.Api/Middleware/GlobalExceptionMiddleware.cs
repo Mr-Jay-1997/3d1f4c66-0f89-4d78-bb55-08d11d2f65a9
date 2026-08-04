@@ -8,9 +8,7 @@ public sealed class GlobalExceptionMiddleware
     private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
 
-    public GlobalExceptionMiddleware(
-        RequestDelegate next,
-        ILogger<GlobalExceptionMiddleware> logger)
+    public GlobalExceptionMiddleware(RequestDelegate next,ILogger<GlobalExceptionMiddleware> logger)
     {
         _next = next;
         _logger = logger;
@@ -26,9 +24,7 @@ public sealed class GlobalExceptionMiddleware
         catch (InvalidInputException ex)
         {
             _logger.LogWarning(ex, ex.Message);
-
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-
             await context.Response.WriteAsJsonAsync(new
             {
                 message = ex.Message
@@ -37,10 +33,7 @@ public sealed class GlobalExceptionMiddleware
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unexpected error occurred.");
-
-            context.Response.StatusCode =
-                StatusCodes.Status500InternalServerError;
-
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsJsonAsync(new
             {
                 message = "An unexpected error occurred."
